@@ -10,3 +10,6 @@ arcade.draw_text("Aquí esta mi primer proyecto con Arcade :)", 280, 300, arcade
 arcade.finish_render()
 
 arcade.run()
+
+
+
