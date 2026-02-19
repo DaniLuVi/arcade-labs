@@ -30,6 +30,9 @@ class Ventana(arcade.Window):
                 k = -k
             arcade.draw_line(0, 250 + k, 800, 350 + k, arcade.color.WHITE, 5)
 
+    def pintar_playa(self):
+        for i in range(20, 800, 40):
+            arcade.draw_arc_filled(i, 0, 40, 20, arcade.color.AERO_BLUE, 0, 180)
 
     def extremos_coche(self, contador, k):
         arcade.draw_triangle_filled(100 + contador * k, 100, 100 + contador * k, 150, 50 + contador * k, 100, (37, 38, 41))
@@ -54,6 +57,7 @@ class Ventana(arcade.Window):
         self.fondo_cielo_blanco()
         self.pintar_sol()
         self.pintar_carretera()
+        self.pintar_playa()
         k = 10
         arcade.draw_lbwh_rectangle_filled(100 + self.contador_animacion * k, 100, 100, 50, (37, 38, 41))
         self.extremos_coche(self.contador_animacion, k)
@@ -62,11 +66,6 @@ class Ventana(arcade.Window):
     
     
 
-# Dibujo
-
-ventana = Ventana()
-
-# --- Finish drawing ---
-
-# Keep the window up until someone closes it.
-arcade.run()
+if __name__ == "__main__":
+    ventana = Ventana()
+    arcade.run()
