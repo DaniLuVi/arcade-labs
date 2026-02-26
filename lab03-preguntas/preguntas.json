@@ -16,7 +16,18 @@
     },
     {
       "pregunta": "¿La tortilla de patata lleva cebolla?",
-      "correcta": "Jamás",
-      "opciones": ["Jamás", "Sí", "No con excepciones", "Tal vez"]
+      "correcta": "Sí",
+      "opciones": ["Sí", "No con excepciones", "Tal vez"]
+    },
+    {
+      "pregunta": "¿Cuál es el río más largo del mundo?",
+      "correcta": "Nilo",
+      "opciones": ["Amazonas", "Nilo", "Yangtsé"]
+    },
+    {
+      "pregunta": "¿Cuántos años tiene Grogu?",
+      "correcta": "50-60",
+      "opciones": ["30-40", "10-20", "50-60", "80-90"]
     }
+
 ]
