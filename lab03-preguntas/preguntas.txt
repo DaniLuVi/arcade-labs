@@ -2,3 +2,4 @@
 ¿Cuántos continentes hay?|5|7|6|3
 ¿Qué lenguaje se usa para programar en Arcade?|Python|Java|JavaScript|C
 ¿La tortilla de patata lleva cebolla?|Jamás|Si|No con excepciones|Tal vez
+¿Cuántos años tiene Grogu?|50-60|10-20|30-40|80-90
