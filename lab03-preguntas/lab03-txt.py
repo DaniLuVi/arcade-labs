@@ -36,7 +36,7 @@ def juego_preguntas(preguntas: list):
 
 
 if __name__ == "__main__":
-    with open(path, "r") as file:
+    with open(path, "r", encoding="utf-8") as file:
         preguntas = []
         for line in file:
             print(line.strip())
