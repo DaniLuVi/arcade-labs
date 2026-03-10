@@ -29,6 +29,22 @@ class Coche:
         self.ruedas_coche(2, 20)
         self.ventanas_coche()
 
+class Nube:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.change_x = 0
+        self.change_y = 0
+
+    def dibujar_nube(self):
+        arcade.draw_circle_filled(self.x, self.y, 30, arcade.color.WHITE)
+        arcade.draw_circle_filled(self.x + 25, self.y + 15, 45, arcade.color.WHITE)
+        arcade.draw_circle_filled(self.x + 50, self.y, 30, arcade.color.WHITE)
+
+    def actualizar(self):
+        self.x += self.change_x
+        self.y += self.change_y
+
 
 class Ventana(arcade.Window):
     def __init__(self):
@@ -39,12 +55,13 @@ class Ventana(arcade.Window):
         arcade.set_background_color((245, 141, 66))
 
         self.coche = Coche(100, 100,(0, 0, 255))
+        self.nube = Nube(400, 450)
         
     def fondo_arena(self):
         arcade.draw_lrbt_rectangle_filled(0, 800, 0, 200, (237, 164, 69))
 
     def fondo_cielo_blanco(self):
-        arcade.draw_lrbt_rectangle_filled(0, 800, 500, 600, (255, 255, 255))
+        arcade.draw_lrbt_rectangle_filled(0, 800, 500, 600, arcade.color.LIGHT_CORNFLOWER_BLUE)
 
     def pintar_sol(self):
         arcade.draw_circle_filled(700, 500, 50, (250, 197, 7))
@@ -70,12 +87,34 @@ class Ventana(arcade.Window):
         self.pintar_carretera()
         self.pintar_playa()
         self.coche.dibujar_coche()
+        self.nube.dibujar_nube()
+
+    def on_update(self, delta_time):
+        self.nube.actualizar()
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Called to update our objects.
         Happens approximately 60 times per second."""
         self.coche.x = x
         self.coche.y = y
+
+    def on_key_press(self, key, modifiers):
+        """ Se llama cuando se PRESIONA una tecla para mover la nube """
+        if key == arcade.key.UP:
+            self.nube.change_y = 5
+        elif key == arcade.key.DOWN:
+            self.nube.change_y = -5
+        elif key == arcade.key.LEFT:
+            self.nube.change_x = -5
+        elif key == arcade.key.RIGHT:
+            self.nube.change_x = 5
+
+    def on_key_release(self, key, modifiers):
+        """ Se llama cuando se SUELTA una tecla para detener la nube """
+        if key == arcade.key.UP or key == arcade.key.DOWN:
+            self.nube.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
+            self.nube.change_x = 0
         
     
 if __name__ == "__main__":
