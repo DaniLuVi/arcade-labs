@@ -1,17 +1,44 @@
 import arcade
 
 # Defino una clase que dibuje un coche
+class Coche:
+    def __init__(self, x, y, color):
+        self.x = x
+        self.y = y
+        self.color = color
+
+    def extremos_coche(self):
+        arcade.draw_triangle_filled(self.x, self.y, self.x, self.y + 50, self.x - 50, self.y, self.color)
+        arcade.draw_triangle_filled(self.x + 100, self.y, self.x + 100, self.y + 50, self.x + 150, self.y, self.color)
+
+    def ruedas_coche(self, num, radio):
+            for i in range(num):
+                arcade.draw_circle_filled(self.x + 15 + i*80, self.y, radio, self.color)
+            
+    def ventanas_coche(self):
+        arcade.draw_polygon_filled(
+            [(self.x + 20, self.y + 20), (self.x + 80, self.y + 20), (self.x + 80, self.y + 40), (self.x + 20, self.y + 40)],
+            self.color
+        )
+        arcade.draw_triangle_filled(self.x + 15, self.y + 20, self.x + 15, self.y + 40, self.x - 5, self.y + 20, self.color)
+        arcade.draw_triangle_filled(self.x + 85, self.y + 20, self.x + 85, self.y + 40, self.x + 105, self.y + 20, self.color)
+    
+    def dibujar_coche(self):
+        arcade.draw_lbwh_rectangle_filled(self.x, self.y, 100, 50, self.color)
+        self.extremos_coche()
+        self.ruedas_coche(2, 20)
+        self.ventanas_coche()
+
+
 class Ventana(arcade.Window):
     def __init__(self):
         super().__init__(800, 600, "Animación")
+
+        self.set_mouse_visible(False)
+
         arcade.set_background_color((245, 141, 66))
 
-        self.contador_animacion = 0
-
-    def on_update(self, delta_time):     
-        self.contador_animacion += 1
-        if self.contador_animacion > 100:
-            self.contador_animacion = 0
+        self.coche = Coche(100, 100,(0, 0, 255))
         
     def fondo_arena(self):
         arcade.draw_lrbt_rectangle_filled(0, 800, 0, 200, (237, 164, 69))
@@ -34,22 +61,6 @@ class Ventana(arcade.Window):
         for i in range(20, 800, 40):
             arcade.draw_arc_filled(i, 0, 40, 20, arcade.color.AERO_BLUE, 0, 180)
 
-    def extremos_coche(self, contador, k):
-        arcade.draw_triangle_filled(100 + contador * k, 100, 100 + contador * k, 150, 50 + contador * k, 100, (37, 38, 41))
-        arcade.draw_triangle_filled(200 + contador * k, 100, 200 + contador * k, 150, 250 + contador * k, 100, (37, 38, 41))
-
-    def ruedas_coche(self, num, radio, contador, k):
-            for i in range(num):
-                arcade.draw_circle_filled(115 + i*80 + contador * k, 100, radio, (37, 38, 41))
-            
-    def ventanas_coche(self, contador, k):
-        arcade.draw_polygon_filled(
-            [(120 + contador * k, 120), (180 + contador * k, 120), (180 + contador * k, 140), (120 + contador * k, 140)],
-            (89, 185, 189)
-        )
-        arcade.draw_triangle_filled(115 + contador * k, 120, 115 + contador * k, 140, 95 + contador * k, 120, (89, 185, 189))
-        arcade.draw_triangle_filled(185 + contador * k, 120, 185 + contador * k, 140, 205 + contador * k, 120, (89, 185, 189))
-
     def on_draw(self):
         self.clear()
 
@@ -58,14 +69,15 @@ class Ventana(arcade.Window):
         self.pintar_sol()
         self.pintar_carretera()
         self.pintar_playa()
-        k = 10
-        arcade.draw_lbwh_rectangle_filled(100 + self.contador_animacion * k, 100, 100, 50, (37, 38, 41))
-        self.extremos_coche(self.contador_animacion, k)
-        self.ruedas_coche(2, 20, self.contador_animacion, k) 
-        self.ventanas_coche(self.contador_animacion, k)
-    
-    
+        self.coche.dibujar_coche()
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        """ Called to update our objects.
+        Happens approximately 60 times per second."""
+        self.coche.x = x
+        self.coche.y = y
+        
+    
 if __name__ == "__main__":
     ventana = Ventana()
     arcade.run()
