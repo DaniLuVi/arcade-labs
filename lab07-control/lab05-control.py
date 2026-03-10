@@ -45,6 +45,23 @@ class Nube:
         self.x += self.change_x
         self.y += self.change_y
 
+        if self.x < 0:
+            self.x = 0
+            arcade.play_sound(arcade.sound.Sound(":resources:sounds/error4.wav"))
+            
+        if self.x > 740:
+            self.x = 740
+            arcade.play_sound(arcade.sound.Sound(":resources:sounds/error4.wav"))
+
+            
+        if self.y < 0:
+            self.y = 0
+            arcade.play_sound(arcade.sound.Sound(":resources:sounds/error4.wav"))
+
+        if self.y > 560:
+            self.y = 560
+            arcade.play_sound(arcade.sound.Sound(":resources:sounds/error4.wav"))
+
 
 class Ventana(arcade.Window):
     def __init__(self):
@@ -56,6 +73,8 @@ class Ventana(arcade.Window):
 
         self.coche = Coche(100, 100,(0, 0, 255))
         self.nube = Nube(400, 450)
+
+        self.sonido_clic = arcade.Sound(":resources:sounds/hit5.wav")
         
     def fondo_arena(self):
         arcade.draw_lrbt_rectangle_filled(0, 800, 0, 200, (237, 164, 69))
@@ -97,6 +116,13 @@ class Ventana(arcade.Window):
         Happens approximately 60 times per second."""
         self.coche.x = x
         self.coche.y = y
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        """ Se llama automáticamente cuando haces clic con cualquier botón del ratón """
+        # Comprobamos si el botón que se ha pulsado es el izquierdo
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            # Reproducimos el sonido que cargamos en el __init__
+            self.sonido_clic.play()
 
     def on_key_press(self, key, modifiers):
         """ Se llama cuando se PRESIONA una tecla para mover la nube """
